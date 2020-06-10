@@ -67,8 +67,24 @@ class NMEA:
         self.error = True
         self.error_msg = msg
 
+    def __str__(self):
+        if self.error:
+            return 'error: True\n' \
+                   'error_msg: ' + self.error_msg
+        else:
+            out = 'error: False\n'
+            out += 'talker_identifier: ' + str(self.talker_identifier) + '\n'
+            out += 'sentence_identifier: ' + str(self.sentence_identifier) + '\n'
+            if self.sentence_identifier == 'GSV':
+                out += 'number_of_messages: ' + str(self.number_of_messages) + '\n'
+                out += 'message_number: ' + str(self.message_number) + '\n'
+                out += 'satellites_in_view: ' + str(self.satellites_in_view) + '\n'
+                out += 'satellite_number: ' + str(self.satellite_number) + '\n'
+                out += 'elevation: ' + str(self.elevation) + '\n'
+                out += 'azimuth: ' + str(self.azimuth) + '\n'
+            out += 'hex: ' + str(self.hex)
+            return out
+
 
 a = NMEA('$GLGSV,2,1,06,74,03,356,23,66,56,033,25,82,66,331,46,83,17,324,2563')
-print('talker_identifier:', a.talker_identifier)
-print('sentence_identifier:', a.sentence_identifier)
-print('satellites_in_view:', a.satellites_in_view)
+print(a)
